@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import './App.css'
+import sailungPhoto from './assets/1760069184738631.jpg'
+import jerseyPhoto from './assets/1760069150864155.jpg'
 
 const noTexts = [
   'No (wait, my finger slipped) 😅',
@@ -12,6 +14,7 @@ function App() {
   const [answer, setAnswer] = useState<'pending' | 'yes'>('pending')
   const [noIndex, setNoIndex] = useState(0)
   const [noClicks, setNoClicks] = useState(0)
+  const [memoryIndex, setMemoryIndex] = useState(0)
 
   const handleYes = () => {
     setAnswer('yes')
@@ -26,6 +29,14 @@ function App() {
     setNoClicks((prev) => prev + 1)
   }
 
+  const memories = [
+    { src: sailungPhoto, alt: 'Sailung memory', caption: 'Sailung memories 🌄' },
+    { src: jerseyPhoto, alt: 'Birthday jersey memory', caption: 'My birthday jersey surprise ⚽🎁' },
+  ] as const
+
+  const nextMemory = () => setMemoryIndex((i) => (i + 1) % memories.length)
+  const prevMemory = () => setMemoryIndex((i) => (i - 1 + memories.length) % memories.length)
+
   return (
     <div className="valentine-page">
       <div className="floating-hearts" aria-hidden="true">
@@ -38,14 +49,24 @@ function App() {
       <div className={`valentine-card ${answer === 'yes' ? 'card-yes' : ''}`}>
         {answer === 'pending' && (
           <>
-            <p className="valentine-greeting">Hey my love,</p>
+            <p className="valentine-greeting">Hey Supriya Prajapati,</p>
             <h1 className="valentine-question">
               Will you be my <span>Valentine</span>?
             </h1>
             <p className="valentine-note">
-              I’m so grateful for you every single day, but this Valentine’s I wanted to ask you
-              properly. So here it is, nice and official:
+              From Sailung sunrises to the football jersey you surprised me with on my birthday,
+              to all the little hangouts where we laugh, fight and still end up choosing each other…
+              every memory with you is my favourite one.
             </p>
+
+            <div className="valentine-reasons">
+              <p className="reasons-title">Top reasons I want you as my Valentine:</p>
+              <ul>
+                <li>Those Sailung memories that feel like our own little movie 🎬</li>
+                <li>The jersey you gave me that feels like a warm hug every time I wear it 🥹</li>
+                <li>The way we “beat each other up” and still can’t stay mad for long 💞</li>
+              </ul>
+            </div>
 
             <div className="valentine-buttons">
               <button
@@ -71,16 +92,50 @@ function App() {
 
         {answer === 'yes' && (
           <div className="yes-state">
-            <p className="valentine-greeting">You said yes! 🎉</p>
+            <div className="yes-heart" aria-hidden="true">
+              <div className="yes-heart-shape" />
+            </div>
+            <p className="valentine-greeting">You said yes, Supriya. 🎉</p>
             <h1 className="valentine-question">
-              Best. <span>Valentine</span>. Ever.
+              From Sailung to forever with <span>you</span>.
             </h1>
+
+            <div className="memories">
+              <div className="memories-header">
+                <p className="memories-title">Our little memories</p>
+                <p className="memories-subtitle">{memories[memoryIndex].caption}</p>
+              </div>
+              <div className="memories-frame">
+                <img className="memories-img" src={memories[memoryIndex].src} alt={memories[memoryIndex].alt} />
+              </div>
+              <div className="memories-controls">
+                <button className="mem-btn" type="button" onClick={prevMemory}>
+                  ‹ Prev
+                </button>
+                <div className="mem-dots" aria-label="Memory selector">
+                  {memories.map((_, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      className={`dot ${idx === memoryIndex ? 'active' : ''}`}
+                      onClick={() => setMemoryIndex(idx)}
+                      aria-label={`Show memory ${idx + 1}`}
+                    />
+                  ))}
+                </div>
+                <button className="mem-btn" type="button" onClick={nextMemory}>
+                  Next ›
+                </button>
+              </div>
+            </div>
+
             <p className="valentine-note">
-              Thank you for choosing me. I promise to keep making you feel loved, appreciated,
-              and a little bit spoiled — not just today, but always. 💖
+              One more memory added to our story: the day you officially became my Valentine.
+              I can&apos;t wait for more jerseys, more trips, more silly fights, and a lifetime
+              of choosing each other again and again.
             </p>
             <p className="valentine-footer">
-              Screenshot this so I can remember this moment forever. 📸
+              Keep this tab open for a while and just smile with me. 💌
             </p>
           </div>
         )}
