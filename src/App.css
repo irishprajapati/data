@@ -1,0 +1,294 @@
+#root {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at top, #ffbfd6 0, #ff8fb8 35%, #ff5c9a 70%, #2b0024 100%);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+}
+
+.valentine-page {
+  width: 100%;
+  padding: 24px;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+}
+
+.valentine-card {
+  max-width: 520px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow:
+    0 24px 40px rgba(0, 0, 0, 0.35),
+    0 0 60px rgba(255, 192, 203, 0.55);
+  backdrop-filter: blur(18px);
+  padding: 32px 26px 28px;
+  color: #fff5fb;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.valentine-card::before,
+.valentine-card::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.9), transparent 60%);
+  opacity: 0.12;
+  filter: blur(4px);
+}
+
+.valentine-card::before {
+  width: 180px;
+  height: 180px;
+  top: -40px;
+  left: -40px;
+}
+
+.valentine-card::after {
+  width: 220px;
+  height: 220px;
+  bottom: -60px;
+  right: -60px;
+}
+
+.valentine-greeting {
+  margin: 0 0 6px;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 236, 248, 0.9);
+}
+
+.valentine-question {
+  margin: 4px 0 14px;
+  font-size: 2.2rem;
+  line-height: 1.15;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #fff0f7;
+  text-shadow: 0 6px 16px rgba(141, 0, 73, 0.8);
+}
+
+.valentine-question span {
+  color: #ffe066;
+  position: relative;
+}
+
+.valentine-question span::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 8px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #ffe066, #ff9ff3, #ff6bcb);
+  opacity: 0.8;
+}
+
+.valentine-note {
+  margin: 0 0 22px;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: rgba(255, 244, 250, 0.92);
+}
+
+.valentine-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  position: relative;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 22px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    background 160ms ease,
+    color 160ms ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.btn.yes {
+  background: linear-gradient(135deg, #ff4b8b, #ff2f6e);
+  color: #fffaf8;
+  box-shadow:
+    0 10px 18px rgba(179, 0, 64, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+.btn.yes:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow:
+    0 16px 24px rgba(179, 0, 64, 0.8),
+    0 0 0 1px rgba(255, 255, 255, 0.3);
+}
+
+.btn.yes.yes-smaller {
+  padding: 8px 18px;
+  font-size: 0.95rem;
+}
+
+.btn.no {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffe5f6;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.btn.no:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.btn.no.no-bigger {
+  padding: 12px 26px;
+  font-size: 1.05rem;
+}
+
+.valentine-footer {
+  margin: 0;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 228, 245, 0.9);
+}
+
+.yes-state {
+  animation: fade-up 320ms ease-out;
+}
+
+.floating-hearts {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.heart {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  background: #ffebf6;
+  transform: rotate(45deg);
+  opacity: 0.7;
+  box-shadow: 0 0 18px rgba(255, 220, 245, 0.7);
+  animation: float-up 10s linear infinite;
+}
+
+.heart::before,
+.heart::after {
+  content: '';
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  background: #ffebf6;
+  border-radius: 50%;
+}
+
+.heart::before {
+  top: -11px;
+  left: 0;
+}
+
+.heart::after {
+  left: -11px;
+  top: 0;
+}
+
+.heart.h1 {
+  left: 10%;
+  bottom: -40px;
+  animation-duration: 11s;
+}
+
+.heart.h2 {
+  left: 70%;
+  bottom: -60px;
+  animation-duration: 13s;
+  animation-delay: 1.4s;
+}
+
+.heart.h3 {
+  left: 35%;
+  bottom: -50px;
+  animation-duration: 9s;
+  animation-delay: 0.8s;
+}
+
+.heart.h4 {
+  left: 85%;
+  bottom: -45px;
+  animation-duration: 12s;
+  animation-delay: 2.2s;
+}
+
+.valentine-card.card-yes {
+  border-color: rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 26px 50px rgba(0, 0, 0, 0.6),
+    0 0 80px rgba(255, 247, 173, 0.9);
+}
+
+@keyframes float-up {
+  0% {
+    transform: translateY(0) rotate(45deg) scale(0.7);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(-120vh) rotate(45deg) scale(1.1);
+    opacity: 0;
+  }
+}
+
+@keyframes fade-up {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 600px) {
+  .valentine-card {
+    padding: 26px 18px 24px;
+  }
+
+  .valentine-question {
+    font-size: 1.8rem;
+  }
+
+  .valentine-note {
+    font-size: 0.9rem;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
