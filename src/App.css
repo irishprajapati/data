@@ -273,19 +273,41 @@
 
 @media (max-width: 640px) {
   #root {
-    padding: 16px;
+    padding: 12px;
   }
 
   .card {
-    padding: 22px 18px 18px;
+    padding: 18px 14px 14px;
+    border-radius: 18px;
   }
 
   .title {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
   }
 
   .subtitle {
-    font-size: 1.2rem;
+    font-size: 1.05rem;
+  }
+
+  .body {
+    font-size: 0.9rem;
+  }
+
+  .timeline-item {
+    padding-left: 22px;
+    padding-bottom: 10px;
+  }
+
+  .timeline-year {
+    font-size: 0.7rem;
+  }
+
+  .timeline-title {
+    font-size: 0.9rem;
+  }
+
+  .timeline-description {
+    font-size: 0.85rem;
   }
 
   .actions {
