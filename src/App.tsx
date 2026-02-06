@@ -1,145 +1,137 @@
 import { useState } from 'react'
 import './App.css'
-import sailungPhoto from './assets/1760069184738631.jpg'
-import barcaPhoto from './assets/barca.jpg'
+import { memories } from './memories'
 
-const noTexts = [
-  'No (wait, my finger slipped) 😅',
-  'Are you sure? 👀',
-  'Think again… 🥺',
-  'Last chance! 💘',
-]
+type Screen = 'intro' | 'timeline' | 'final'
 
 function App() {
-  const [answer, setAnswer] = useState<'pending' | 'yes'>('pending')
-  const [noIndex, setNoIndex] = useState(0)
-  const [noClicks, setNoClicks] = useState(0)
-  const [memoryIndex, setMemoryIndex] = useState(0)
+  const [screen, setScreen] = useState<Screen>('intro')
+  const [finalAnswer, setFinalAnswer] = useState<'pending' | 'yes'>('pending')
 
-  const handleYes = () => {
-    setAnswer('yes')
+  const goNext = () => {
+    setScreen((prev) => (prev === 'intro' ? 'timeline' : 'final'))
   }
 
-  const handleNoHover = () => {
-    setNoIndex((prev) => (prev + 1) % noTexts.length)
+  const goBack = () => {
+    if (screen === 'final') {
+      setFinalAnswer('pending')
+    }
+    setScreen((prev) => (prev === 'final' ? 'timeline' : 'intro'))
   }
-
-  const handleNoClick = () => {
-    setNoIndex((prev) => (prev + 1) % noTexts.length)
-    setNoClicks((prev) => prev + 1)
-  }
-
-  const memories = [
-    { src: sailungPhoto, alt: 'Sailung memory', caption: 'Sailung memories 🌄' },
-    { src: barcaPhoto, alt: 'Barca jersey memory', caption: 'Barca jersey & football love ⚽🔵🔴' },
-  ] as const
-
-  const nextMemory = () => setMemoryIndex((i) => (i + 1) % memories.length)
-  const prevMemory = () => setMemoryIndex((i) => (i - 1 + memories.length) % memories.length)
 
   return (
-    <div className="valentine-page">
-      <div className="floating-hearts" aria-hidden="true">
-        <div className="heart h1" />
-        <div className="heart h2" />
-        <div className="heart h3" />
-        <div className="heart h4" />
-      </div>
-
-      <div className={`valentine-card ${answer === 'yes' ? 'card-yes' : ''}`}>
-        {answer === 'pending' && (
-          <>
-            <p className="valentine-greeting">Hey Supriya Prajapati,</p>
-            <h1 className="valentine-question">
-              Will you be my <span>Valentine</span>?
+    <div className="app-shell">
+      <main className={`card card-${screen}`}>
+        {screen === 'intro' && (
+          <section className="screen screen-intro">
+            <p className="eyebrow">From Erish Prajapati to Supriya Shrestha</p>
+            <h1 className="title">
+              A small page
+              <br />
+              for a big feeling.
             </h1>
-            <p className="valentine-note">
-              From Sailung sunrises to the football jersey you surprised me with on my birthday,
-              to all the little hangouts where we laugh, fight and still end up choosing each other…
-              every memory with you is my favourite one.
+            <p className="body">
+              This isn&apos;t flowers or chocolate. It&apos;s something a little more &quot;us&quot;:
+              a quiet corner of the internet where I can say how much you mean to me, one moment at
+              a time.
             </p>
-
-            <div className="valentine-reasons">
-              <p className="reasons-title">Top reasons I want you as my Valentine:</p>
-              <ul>
-                <li>Those Sailung memories that feel like our own little movie 🎬</li>
-                <li>The jersey you gave me that feels like a warm hug every time I wear it 🥹</li>
-                <li>The way we “beat each other up” and still can’t stay mad for long 💞</li>
-              </ul>
-            </div>
-
-            <div className="valentine-buttons">
-              <button
-                className={`btn yes ${noClicks > 0 ? 'yes-smaller' : ''}`}
-                onClick={handleYes}
-              >
-                Yes 💘
-              </button>
-              <button
-                className={`btn no ${noClicks > 0 ? 'no-bigger' : ''}`}
-                onMouseEnter={handleNoHover}
-                onClick={handleNoClick}
-              >
-                {noTexts[noIndex]}
-              </button>
-            </div>
-
-            <p className="valentine-footer">
-              Made with ❤️ just for you.
-            </p>
-          </>
+            <button className="primary-btn" type="button" onClick={goNext}>
+              Walk through our memories
+            </button>
+          </section>
         )}
 
-        {answer === 'yes' && (
-          <div className="yes-state">
-            <div className="yes-heart" aria-hidden="true">
-              <div className="yes-heart-shape" />
+        {screen === 'timeline' && (
+          <section className="screen screen-timeline">
+            <p className="eyebrow">Our timeline</p>
+            <h2 className="subtitle">Little moments that turned into &quot;us&quot;</h2>
+            <ol className="timeline">
+              {memories.map((memory, index) => (
+                <li key={memory.id} className="timeline-item">
+                  <div className="timeline-dot" />
+                  <div className="timeline-content">
+                    <p className="timeline-year">{memory.year}</p>
+                    <h3 className="timeline-title">{memory.title}</h3>
+                    <p className="timeline-description">{memory.description}</p>
+                  </div>
+                  {index !== memories.length - 1 && <div className="timeline-line" />}
+                </li>
+              ))}
+            </ol>
+            <div className="actions">
+              <button className="ghost-btn" type="button" onClick={goBack}>
+                Back
+              </button>
+              <button className="primary-btn" type="button" onClick={goNext}>
+                And now, a question
+              </button>
             </div>
-            <p className="valentine-greeting">You said yes, Supriya. 🎉</p>
-            <h1 className="valentine-question">
-              From Sailung to forever with <span>you</span>.
-            </h1>
+          </section>
+        )}
 
-            <div className="memories">
-              <div className="memories-header">
-                <p className="memories-title">Our little memories</p>
-                <p className="memories-subtitle">{memories[memoryIndex].caption}</p>
-              </div>
-              <div className="memories-frame">
-                <img className="memories-img" src={memories[memoryIndex].src} alt={memories[memoryIndex].alt} />
-              </div>
-              <div className="memories-controls">
-                <button className="mem-btn" type="button" onClick={prevMemory}>
-                  ‹ Prev
-                </button>
-                <div className="mem-dots" aria-label="Memory selector">
-                  {memories.map((_, idx) => (
-                    <button
-                      key={idx}
-                      type="button"
-                      className={`dot ${idx === memoryIndex ? 'active' : ''}`}
-                      onClick={() => setMemoryIndex(idx)}
-                      aria-label={`Show memory ${idx + 1}`}
-                    />
-                  ))}
+        {screen === 'final' && (
+          <section className="screen screen-final">
+            <p className="eyebrow">Right here, right now</p>
+            <h2 className="title">
+              Supriya,
+              <br />
+              will you be my Valentine?
+            </h2>
+            {finalAnswer === 'pending' && (
+              <>
+                <p className="body">
+                  After Sailung mornings, jersey surprises, and all our playful fights, I realised
+                  something simple: there&apos;s no version of the future I want where you&apos;re
+                  not in it. Not just as a memory, but as my person.
+                </p>
+                <p className="body body-soft">
+                  So this is me asking gently, honestly and completely: stay in my story. Not just
+                  this Valentine&apos;s, but for all the chapters after it too.
+                </p>
+                <div className="answer-row">
+                  <button
+                    type="button"
+                    className="primary-btn answer-yes"
+                    onClick={() => setFinalAnswer('yes')}
+                  >
+                    Yes, of course
+                  </button>
+                  <button
+                    type="button"
+                    className="ghost-btn answer-no"
+                    onClick={() => setFinalAnswer('yes')}
+                  >
+                    I was already yours anyway
+                  </button>
                 </div>
-                <button className="mem-btn" type="button" onClick={nextMemory}>
-                  Next ›
-                </button>
-              </div>
-            </div>
+                <p className="hint">
+                  (There&apos;s no real &quot;no&quot; button here, because deep down I already know
+                  your answer.)
+                </p>
+              </>
+            )}
 
-            <p className="valentine-note">
-              One more memory added to our story: the day you officially became my Valentine.
-              I can&apos;t wait for more jerseys, more trips, more silly fights, and a lifetime
-              of choosing each other again and again.
-            </p>
-            <p className="valentine-footer">
-              Keep this tab open for a while and just smile with me. 💌
-            </p>
-          </div>
+            {finalAnswer === 'yes' && (
+              <>
+                <p className="body">
+                  Okay, it&apos;s official now: you and me, this Valentine&apos;s and every one
+                  after it. Thank you for choosing me — for the big days, the boring days, and all
+                  the messy ones in between.
+                </p>
+                <p className="body body-soft">
+                  Let&apos;s keep collecting tiny moments — long calls, bad jokes, Sailung mornings,
+                  late walks — until they quietly turn into a whole lifetime.
+                </p>
+              </>
+            )}
+            <div className="actions">
+              <button className="ghost-btn" type="button" onClick={goBack}>
+                Revisit our memories
+              </button>
+            </div>
+          </section>
         )}
-      </div>
+      </main>
     </div>
   )
 }
