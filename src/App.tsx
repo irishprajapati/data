@@ -115,12 +115,15 @@ function App() {
               <>
                 <p className="body">
                   Okay, it&apos;s official now: you and me, this Valentine&apos;s and every one
-                  after it. Thank you for choosing me — for the big days, the boring days, and all
-                  the messy ones in between.
+                  after it. Thank you, Supriya, for choosing me — in the loud moments, the quiet
+                  ones, and all the ordinary days that somehow feel softer because you&apos;re in
+                  them.
                 </p>
                 <p className="body body-soft">
-                  Let&apos;s keep collecting tiny moments — long calls, bad jokes, Sailung mornings,
-                  late walks — until they quietly turn into a whole lifetime.
+                  From Sailung skies to Barca jerseys to our silly fights and late-night talks,
+                  every little thing we&apos;ve shared has started to feel like home. Let&apos;s
+                  keep building this — one small, imperfect, beautiful moment at a time — until one
+                  day we look back and realise we turned it into a whole lifetime together.
                 </p>
               </>
             )}
