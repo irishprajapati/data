@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import sailungPhoto from './assets/1760069184738631.jpg'
-import jerseyPhoto from './assets/1760069150864155.jpg'
+import barcaPhoto from './assets/barca.jpg'
 
 const noTexts = [
   'No (wait, my finger slipped) 😅',
@@ -31,7 +31,7 @@ function App() {
 
   const memories = [
     { src: sailungPhoto, alt: 'Sailung memory', caption: 'Sailung memories 🌄' },
-    { src: jerseyPhoto, alt: 'Birthday jersey memory', caption: 'My birthday jersey surprise ⚽🎁' },
+    { src: barcaPhoto, alt: 'Barca jersey memory', caption: 'Barca jersey & football love ⚽🔵🔴' },
   ] as const
 
   const nextMemory = () => setMemoryIndex((i) => (i + 1) % memories.length)
